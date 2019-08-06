@@ -1,0 +1,42 @@
+{
+  "name": "q",
+  "version": "0.1.0",
+  "main": "./src/index.js",
+  "repository": "https://github.com/mobalt/q",
+  "author": "Moises Baltazar <me@moisesb.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "prettier-eslint '{src,test}/**/*.*' --list-different --write",
+    "test": "mocha --require esm"
+  },
+  "devDependencies": {
+    "chai": ">=4.2.0",
+    "esm": ">=3.2.25",
+    "mocha": ">=6.2.0",
+    "prettier-eslint": ">=9.0.0",
+    "prettier-eslint-cli": ">=5.0.0"
+  },
+  "mocha": {
+    "color": true,
+    "spec": "test/**/*.spec.js",
+    "slow": 75,
+    "timeout": 2000,
+    "reporter": "list",
+    "ui": "bdd",
+    "watch": false
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.{yml,yaml,json}",
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
+  }
+}
