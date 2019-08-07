@@ -1,6 +1,6 @@
 import 'chai/register-should'
 //import {describe} from 'mocha'
-import { Q } from '../src'
+import Q  from '../src'
 
 describe('Q', () => {
     const startedOutAsY = 'started out as Y',

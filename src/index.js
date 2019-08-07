@@ -62,7 +62,7 @@ function mergeObj(unto, newProps) {
     return unto
 }
 
-export function Q(func1, func2) {
+export default function Q(func1, func2) {
     const args = Array.from(arguments),
         strings = args.filter(isStr),
         fns = args

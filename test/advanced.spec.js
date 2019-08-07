@@ -1,5 +1,5 @@
 import 'chai/register-should'
-import { Q } from '../src'
+import  Q  from '../src'
 
 function containsHTML(str) {
     return /<([^>]+)>/.test(str)
