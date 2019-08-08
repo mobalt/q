@@ -225,6 +225,11 @@ function isStr(item) {
     return typeof item == 'string'
 }
 
+/**
+ * If value is defined, returns true. Else returns undefined (which is falsey).
+ * @param value
+ * @returns {boolean|undefined} Returns true or undefined
+ */
 function isDefined(value) {
-    return typeof value != 'undefined' && value != null
+    return (typeof value != 'undefined' && value != null) || undefined
 }
