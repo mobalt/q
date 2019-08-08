@@ -61,8 +61,28 @@ function mergeObj(unto, newProps) {
     }
     return unto
 }
+// @returns {{updateX}|*|(function(): *)|(function(): *)}
 
-export default function Q(func1, func2) {
+/**
+ *  Create a filter function
+ * @param {string} x
+ * @param {string} y
+ * @param {function} [yToX]
+ * @param {function} [xToY]
+ * @constructor
+ *//**
+ *  Create a filter function
+ * @param {string} y
+ * @param {function} [yToX]
+ * @param {function} [xToY]
+ * @constructor
+ *//**
+ *  Create a filter function
+ * @param {function} yToX
+ * @param {function} [xToY]
+ * @constructor
+ */
+export default function Q() {
     const args = Array.from(arguments),
         strings = args.filter(isStr),
         fns = args
