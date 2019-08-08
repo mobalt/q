@@ -109,8 +109,12 @@ function mergeObj(unto, newProps) {
 function mapTo(y, itemFilter) {
     return fn({
         y,
-        yToX: x => x.map(itemFilter),
-        xToY: x => x.map(itemFilter.reverse),
+        yToX: y =>
+            isDefined(y) && Array.isArray(y) ? y.map(itemFilter) : undefined,
+        xToY: x =>
+            isDefined(x) && Array.isArray(x)
+                ? x.map(itemFilter.reverse)
+                : undefined,
     })
 }
 Q.mapTo = mapTo
