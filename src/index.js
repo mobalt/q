@@ -91,8 +91,8 @@ export default function Q() {
 
     const yToX = fns[0],
         xToY = fns[1],
-        x = strings[1],
-        y = strings[0]
+        x = strings[1] && strings[0],
+        y = strings[1] || strings[0]
 
     if (yToX && yToX.hasOwnProperty('updateX') && !xToY) {
         // console.log('just updating')
