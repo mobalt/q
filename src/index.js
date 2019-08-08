@@ -82,7 +82,7 @@ function mergeObj(unto, newProps) {
  * @param {function} yToX
  * @param {function} [xToY]
  * @constructor
- */ export default function Q() {
+ */ function Q() {
     const args = Array.from(arguments),
         strings = args.filter(isStr),
         fns = args
@@ -237,3 +237,5 @@ function isStr(item) {
 function isDefined(value) {
     return (typeof value != 'undefined' && value != null) || undefined
 }
+
+module.exports = Q
