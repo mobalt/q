@@ -24,41 +24,36 @@ describe('Additional options', () => {
     const rLookup = {
         aaa: 'one',
         bbb: 'two',
-        undefined: 'three'
+        undefined: 'three',
     }
     const fn = Q({
-        x: Q('y',
-            y => lookup[y],
-            x =>  rLookup[x] || 'other number'
-        ).update({
+        x: Q('y', y => lookup[y], x => rLookup[x] || 'other number').update({
             checkY: false,
-            checkX: false
-        })
+            checkX: false,
+        }),
     })
-
 
     it('works when all is defined', () => {
-        const one = {y: 'one'}, oneOut = {x: 'aaa'}
-        fn(one) .should.deep.equal(oneOut)
+        const one = { y: 'one' },
+            oneOut = { x: 'aaa' }
+        fn(one).should.deep.equal(oneOut)
         fn.reverse(oneOut).should.deep.equal(one)
 
-        const two = {y: 'two'}, twoOut = {x: 'bbb'}
-        fn(two) .should.deep.equal(twoOut)
+        const two = { y: 'two' },
+            twoOut = { x: 'bbb' }
+        fn(two).should.deep.equal(twoOut)
         fn.reverse(twoOut).should.deep.equal(two)
     })
-    it ('works when undefined', ()=>{
-
-        const three = {y: 'three'}, threeOut = {}
-        fn(three) .should.deep.equal(threeOut)
+    it('works when undefined', () => {
+        const three = { y: 'three' },
+            threeOut = {}
+        fn(three).should.deep.equal(threeOut)
         fn.reverse(threeOut).should.deep.equal(three)
-
     })
-    it ('works when default cases', ()=>{
+    it('works when default cases', () => {
+        fn({ y: 'four' }).should.deep.equal({})
+        fn.reverse({}).should.deep.equal({ y: 'three' })
 
-        fn({y: 'four'}) .should.deep.equal({})
-        fn.reverse({}).should.deep.equal({y: 'three'})
-
-        fn.reverse({x: 'XXX'}).should.deep.equal({y: 'other number'})
-
+        fn.reverse({ x: 'XXX' }).should.deep.equal({ y: 'other number' })
     })
 })

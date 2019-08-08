@@ -61,28 +61,27 @@ function mergeObj(unto, newProps) {
     }
     return unto
 }
-// @returns {{updateX}|*|(function(): *)|(function(): *)}
 
 /**
+ *  Create a filter function
+ * @param {function} yToX
+ * @param {function} [xToY]
+ * @constructor
+ *//**
+ *  Create a filter function
+ * @param {string} y
+ * @param {function} [yToX]
+ * @param {function} [xToY]
+ * @constructor
+ *//**
  *  Create a filter function
  * @param {string} x
  * @param {string} y
  * @param {function} [yToX]
  * @param {function} [xToY]
  * @constructor
- *//**
- *  Create a filter function
- * @param {string} y
- * @param {function} [yToX]
- * @param {function} [xToY]
- * @constructor
- *//**
- *  Create a filter function
- * @param {function} yToX
- * @param {function} [xToY]
- * @constructor
  */
-export default function Q() {
+ export default function Q() {
     const args = Array.from(arguments),
         strings = args.filter(isStr),
         fns = args
@@ -145,24 +144,27 @@ function fn(context) {
     }
 }
 
-
-
 function simplify(f, p, r) {
     const checkP = `check${p.toUpperCase()}`,
         simplifyP = `simplify${p.toUpperCase()}`,
         checkR = `checkResult${r.toUpperCase()}`
     return function(obj) {
-        const { [f]: fn, [p]: paramName, [r]: resultName} = this
+        const { [f]: fn, [p]: paramName, [r]: resultName } = this
         const {
             [simplifyP]: simplifyParam = !!paramName,
             [checkP]: checkParam = !!paramName,
-            [checkR]: checkResult = !!resultName
+            [checkR]: checkResult = !!resultName,
         } = this
         //console.log('params::::',paramName,simplifyParam,checkParam, simplifyP, checkP)
         //console.log('results::::',resultName,checkResult, checkR)
 
         if (!fn) {
-            if (resultName && paramName && checkParam && obj[paramName] !== undefined) {
+            if (
+                resultName &&
+                paramName &&
+                checkParam &&
+                obj[paramName] !== undefined
+            ) {
                 return {
                     [resultName]: obj[paramName],
                 }
