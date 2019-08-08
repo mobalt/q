@@ -61,19 +61,7 @@ function mergeObj(unto, newProps) {
     }
     return unto
 }
-
 /**
- *  Create a filter function
- * @param {function} yToX
- * @param {function} [xToY]
- * @constructor
- *//**
- *  Create a filter function
- * @param {string} y
- * @param {function} [yToX]
- * @param {function} [xToY]
- * @constructor
- *//**
  *  Create a filter function
  * @param {string} x
  * @param {string} y
@@ -81,7 +69,20 @@ function mergeObj(unto, newProps) {
  * @param {function} [xToY]
  * @constructor
  */
- export default function Q() {
+/**
+ *  Create a filter function
+ * @param {string} y
+ * @param {function} [yToX]
+ * @param {function} [xToY]
+ * @constructor
+ */
+
+/**
+ *  Create a filter function
+ * @param {function} yToX
+ * @param {function} [xToY]
+ * @constructor
+ */ export default function Q() {
     const args = Array.from(arguments),
         strings = args.filter(isStr),
         fns = args
@@ -147,12 +148,14 @@ function fn(context) {
 function simplify(f, p, r) {
     const checkP = `check${p.toUpperCase()}`,
         simplifyP = `simplify${p.toUpperCase()}`,
+        simplifyR = `simplify${r.toUpperCase()}`,
         checkR = `checkResult${r.toUpperCase()}`
     return function(obj) {
         const { [f]: fn, [p]: paramName, [r]: resultName } = this
         const {
             [simplifyP]: simplifyParam = !!paramName,
             [checkP]: checkParam = !!paramName,
+            [simplifyR]: simplifyResult = !!resultName,
             [checkR]: checkResult = !!resultName,
         } = this
         //console.log('params::::',paramName,simplifyParam,checkParam, simplifyP, checkP)
@@ -162,26 +165,38 @@ function simplify(f, p, r) {
             if (
                 resultName &&
                 paramName &&
-                checkParam &&
-                obj[paramName] !== undefined
+                (!checkParam || isDefined(obj[paramName]))
             ) {
                 return {
                     [resultName]: obj[paramName],
                 }
-            } // else fallthrough
+            } else {
+                return {}
+            }
         } else {
             const param = paramName && simplifyParam ? obj[paramName] : obj
-            if (!checkParam || param !== undefined) {
+            if (!checkParam || isDefined(param)) {
                 const result = fn.call({ ...this, obj }, param)
 
-                if (!checkResult || result !== undefined) {
-                    return resultName ? { [resultName]: result } : result
-                } // else fallthrough
-            } // else fallthrough
+                if (simplifyResult) {
+                    if (!checkResult || isDefined(result)) {
+                        if (resultName) {
+                            return { [resultName]: result }
+                        } else {
+                            return result
+                        }
+                    } else {
+                        return {}
+                    }
+                } else if (isObj(result)) {
+                    return result
+                } else {
+                    return {}
+                }
+            } else {
+                return {}
+            }
         }
-
-        // catchall fallthroughs
-        return {}
     }
 }
 
