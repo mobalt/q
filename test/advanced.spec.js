@@ -30,8 +30,7 @@ function htmlText(textName, htmlName, required = false) {
     )
 }
 
-describe('Q', () => {
-    describe('advanced', () => {
+    describe('Advanced Q', () => {
         const filter = Q({
             text: htmlText('textText', 'textHtml'),
             comments: htmlText('comments'),
@@ -61,7 +60,6 @@ describe('Q', () => {
             }).should.deep.equal({ comments: 'good', text: 'great' })
         })
     })
-})
 
 function isDefined(value) {
     return typeof value != 'undefined' && value != null

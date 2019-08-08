@@ -1,5 +1,4 @@
 import 'chai/register-should'
-//import {describe} from 'mocha'
 import Q from '../src'
 
 describe('Additional options', () => {
