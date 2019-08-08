@@ -125,22 +125,34 @@ function fn(context) {
     }
 }
 
+
+
 function simplify(f, p, r) {
+    const checkP = `check${p.toUpperCase()}`,
+        simplifyP = `simplify${p.toUpperCase()}`,
+        checkR = `checkResult${r.toUpperCase()}`
     return function(obj) {
-        const { [f]: fn, [p]: paramName, [r]: resultName } = this
+        const { [f]: fn, [p]: paramName, [r]: resultName} = this
+        const {
+            [simplifyP]: simplifyParam = !!paramName,
+            [checkP]: checkParam = !!paramName,
+            [checkR]: checkResult = !!resultName
+        } = this
+        //console.log('params::::',paramName,simplifyParam,checkParam, simplifyP, checkP)
+        //console.log('results::::',resultName,checkResult, checkR)
 
         if (!fn) {
-            if (resultName && paramName && obj[paramName] !== undefined) {
+            if (resultName && paramName && checkParam && obj[paramName] !== undefined) {
                 return {
                     [resultName]: obj[paramName],
                 }
             } // else fallthrough
         } else {
-            const param = paramName ? obj[paramName] : obj
-            if (param !== undefined) {
+            const param = paramName && simplifyParam ? obj[paramName] : obj
+            if (!checkParam || param !== undefined) {
                 const result = fn.call({ ...this, obj }, param)
 
-                if (result !== undefined) {
+                if (!checkResult || result !== undefined) {
                     return resultName ? { [resultName]: result } : result
                 } // else fallthrough
             } // else fallthrough
